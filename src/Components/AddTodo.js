@@ -7,6 +7,7 @@ export class AddTodo extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+    console.log(this.state.title)
     this.props.addTodo(this.state.title);
     this.setState({ title: "" });
   };

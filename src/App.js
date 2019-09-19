@@ -4,30 +4,44 @@ import Todos from "./Components/Todos";
 import AddTodo from "./Components/AddTodo";
 import Header from "./Components/Layout/Header";
 import About from "./Components/Pages/About";
-import uuid from "uuid";
+import axios from "axios";
 
 import "./App.css";
 
 class App extends Component {
   state = {
-    todos: [
-      {
-        id: uuid.v4(),
-        title: "Take out the trash",
-        completed: false
-      },
-      {
-        id: uuid.v4(),
-        title: "Dinner with wife",
-        completed: false
-      },
-      {
-        id: uuid.v4(),
-        title: "Meeting with boss",
-        completed: false
-      }
-    ]
+    todos: []
+    // {
+    //   id: uuid.v4(),
+    //   title: "Take out the trash",
+    //   completed: false
+    // },
+    // {
+    //   id: uuid.v4(),
+    //   title: "Dinner with wife",
+    //   completed: false
+    // },
+    // {
+    //   id: uuid.v4(),
+    //   title: "Meeting with boss",
+    //   completed: false
+    // }
   };
+
+  getTodos = () => {
+    axios
+      .get(`http://localhost:1000/api/todos`)
+      .then(response => {
+        this.setState({ todos: response.data });
+      })
+      .catch(err => {
+        console.log("error");
+      });
+  };
+
+  componentDidMount() {
+    this.getTodos()
+  }
 
   // Toggle complete
   markComplete = id => {
@@ -47,13 +61,24 @@ class App extends Component {
     });
   };
 
-  addTodo = title => {
-    const newTodo = {
-      id: uuid.v4(),
-      title,
-      completed: false
-    };
-    this.setState({ todos: [...this.state.todos, newTodo] });
+  addTodo = todo => {
+    axios
+    .post(`http://localhost:1000/api/todos`, todo)
+    .then(response => {
+      this.getTodos();
+      this.setState({ todos: response.data });
+      console.log("todo", todo)
+    })
+      .catch(err => {
+        console.log("error");
+      });
+
+    // const newTodo = {
+    //   id: uuid.v4(),
+    //   title,
+    //   completed: false
+    // };
+    // this.setState({ todos: [...this.state.todos, newTodo] });
   };
 
   render() {
