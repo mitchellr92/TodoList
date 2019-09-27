@@ -1,14 +1,22 @@
 import React, { Component } from "react";
 
 export class AddTodo extends Component {
-  state = {
-    title: ""
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      title: ""
+    };
+  }
 
   onSubmit = e => {
     e.preventDefault();
-    console.log(this.state.title)
-    this.props.addTodo(this.state.title);
+    const newTodo = {
+      title: this.state.title
+    };
+
+    this.props.addTodo(newTodo);
+
     this.setState({ title: "" });
   };
 
@@ -18,7 +26,7 @@ export class AddTodo extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit} style={{ display: "flex" }}>
+      <form style={{ display: "flex" }}>
         <input
           type="text"
           name="title"
@@ -32,6 +40,7 @@ export class AddTodo extends Component {
           value="Submit"
           className="btn"
           style={{ flex: "1" }}
+          onClick={this.onSubmit}
         />
       </form>
     );

@@ -40,7 +40,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.getTodos()
+    this.getTodos();
   }
 
   // Toggle complete
@@ -62,15 +62,16 @@ class App extends Component {
   };
 
   addTodo = todo => {
+    console.log('todo --->', todo)
     axios
-    .post(`http://localhost:1000/api/todos`, todo)
-    .then(response => {
-      this.getTodos();
-      this.setState({ todos: response.data });
-      console.log("todo", todo)
-    })
+      .post(`http://localhost:1000/api/todos`, todo)
+      .then(response => {
+        this.getTodos();
+        this.setState('data', { todos: response.data });
+        console.log(response);
+      })
       .catch(err => {
-        console.log("error");
+        console.log(err);
       });
 
     // const newTodo = {
@@ -91,14 +92,15 @@ class App extends Component {
               exact
               path="/"
               render={props => (
-                <React.Fragment>
-                  <AddTodo addTodo={this.addTodo} />
+                <div>
+                  <AddTodo {...props} addTodo={this.addTodo} />
                   <Todos
+                    {...props}
                     todos={this.state.todos}
                     markComplete={this.markComplete}
                     delTodo={this.delTodo}
                   />
-                </React.Fragment>
+                </div>
               )}
             />
             <Route path="/about" component={About} />
