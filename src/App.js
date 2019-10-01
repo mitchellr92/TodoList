@@ -17,9 +17,7 @@ class App extends Component {
     axios
       .get(`http://localhost:1234/api/todos`)
       .then(response => {
-        console.log("response", response.data);
         this.setState({ todos: response.data });
-        console.log(this.state.todos);
       })
       .catch(err => {
         console.log("error");
@@ -52,13 +50,11 @@ class App extends Component {
   };
 
   addTodo = todo => {
-    console.log("todo --->", todo);
     axios
       .post(`http://localhost:1234/api/todos`, todo)
       .then(response => {
         this.getTodos();
         this.setState("data", { todos: response.data });
-        console.log(response);
       })
       .catch(err => {
         console.log(err);
