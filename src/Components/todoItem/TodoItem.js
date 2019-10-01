@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import List from "../checkList/list/List";
 import "./TodoItem.css";
 
 export class TodoItem extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      showCheckList: false
+      showCheckList: false,
+      listItems: [1, 2, 3]
     };
     this.showList = this.showList.bind(this);
   }
@@ -47,7 +49,7 @@ export class TodoItem extends Component {
           </p>
         </div>
         {this.state.showCheckList ? (
-          <div className="check-list">Here is the check list</div>
+          <List listItems={this.state.listItems} />
         ) : null}
       </div>
     );
