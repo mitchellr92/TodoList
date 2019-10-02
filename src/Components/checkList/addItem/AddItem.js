@@ -15,11 +15,10 @@ export class AddItem extends Component {
             title: this.state.title
         };
 
-        this.props.addListItem(newItem);
+        this.props.addListItem(this.props.todoId, newItem);
 
         this.setState({ title: "" });
 
-        console.log(newItem)
     };
 
     onChange = e => {

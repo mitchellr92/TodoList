@@ -16,21 +16,20 @@ export class TodoItem extends Component {
     this.showList = this.showList.bind(this);
   }
 
-  getCheckList = () => {
+  getCheckList = id => {
     axios
-      .get(`http://localhost:1234/api/checkList`)
+      .get(`http://localhost:1234/api/todos/${id}/checkList`)
       .then(response => {
         this.setState({ listItems: response.data });
       })
       .catch(err => {
         console.log(err);
       });
-    console.log("list items", this.state.listItems);
   };
 
-  addListItem = item => {
+  addListItem = (id, item) => {
     axios
-      .post(`http://localhost:1234/api/checkList`, item)
+      .post(`http://localhost:1234/api/todos/${id}/checkList`, item)
       .then(response => {
         this.getCheckList();
         this.setState("data", { listItems: response.data });
@@ -49,7 +48,11 @@ export class TodoItem extends Component {
   showList(e) {
     e.preventDefault();
 
-    this.getCheckList();
+    console.log("todo", this.props.todo);
+
+    const id = this.props.todo.id;
+
+    this.getCheckList(id);
 
     this.setState(prevState => ({ showCheckList: !prevState.showCheckList }));
   }
@@ -69,7 +72,10 @@ export class TodoItem extends Component {
             <button className="checklist-button" onClick={this.showList}>
               >
             </button>
-            <AddItem addListItem={this.addListItem} />
+            <AddItem
+              addListItem={this.addListItem}
+              todoId={this.props.todo.id}
+            />
             <button
               className="delete-button"
               onClick={this.props.delTodo.bind(this, id)}
