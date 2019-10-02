@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 class Todos extends Component {
   render() {
+    console.log("todos", this.props.todos)
     return this.props.todos.map(todo => (
       <TodoItem
         key={todo.id}
