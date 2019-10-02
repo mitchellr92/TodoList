@@ -11,7 +11,7 @@ export class TodoItem extends Component {
 
     this.state = {
       showCheckList: false,
-      listItems: [1, 2, 3]
+      listItems: []
     };
     this.showList = this.showList.bind(this);
   }
@@ -49,7 +49,7 @@ export class TodoItem extends Component {
   showList(e) {
     e.preventDefault();
 
-    // this.getCheckList();
+    this.getCheckList();
 
     this.setState(prevState => ({ showCheckList: !prevState.showCheckList }));
   }
